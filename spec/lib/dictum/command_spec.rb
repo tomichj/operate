@@ -1,5 +1,5 @@
-require 'spec_helper'
 require 'dictum'
+require 'spec_helper'
 
 module Dictum
   describe Command do
@@ -41,7 +41,17 @@ module Dictum
   end
 end
 
-class WithConstructorCommand # <include> Dictum::Command
+# class TransactingCommand
+#   include Dictum::Command
+#   def call
+#     transaction do
+#       raise ActiveRecord::Rollback
+#     end
+#     broadcast(:done)
+#   end
+# end
+
+class WithConstructorCommand
   include Dictum::Command
   def initialize(arg)
     @arg = arg
@@ -51,14 +61,14 @@ class WithConstructorCommand # <include> Dictum::Command
   end
 end
 
-class SimpleCommand # < Dictum::Command
+class SimpleCommand
   include Dictum::Command
   def call
     broadcast(:ok)
   end
 end
 
-class WithArgCommand # < Dictum::Command
+class WithArgCommand
   include Dictum::Command
   MSG = 'Oooh I failed'
   def call

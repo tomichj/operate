@@ -1,18 +1,21 @@
-require 'active_support/concern'
-require 'dictum/pubsub/publisher'
-require 'dictum/pubsub/events'
-require 'dictum/pubsub/registration'
-
 module Dictum
 
   #
-  # A command.
+  # A command-pattern implementation for controller actions, etc.
+  #
+  # `register` handlers with on().
+  # `broadcast` results with broadcast().
+  # `transaction` wraps ActiveRecord transactions.
   #
   module Command
     include Dictum::Pubsub::Publisher
     extend ActiveSupport::Concern
 
     module ClassMethods
+
+      #
+      # Call will initialize the class with *args and invoke `call` with no parameters.
+      #
       def call(*args, &block)
         command = new(*args)
         command.evaluate(&block) if block_given?
