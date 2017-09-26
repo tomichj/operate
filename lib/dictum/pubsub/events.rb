@@ -7,21 +7,14 @@ module Dictum
     # when responding to the {#include?} method call.
     class Events
 
-      # @!scope class
-      # @!method new(on)
-      # Initializes a 'list' of events
+      # Initialize with a list of events.
       #
       # @param [NilClass, String, Symbol, Array, Regexp] list
-      #
-      # @raise [ArgumentError]
-      #   if an argument if of unsupported type
-      #
-      # @return [undefined]
       def initialize(list)
         @list = list
       end
 
-      # Check if given event is 'included' to the 'list' of events
+      # Check if given event is included in the 'list' of events.
       #
       # @param [#to_s] event
       #
@@ -32,6 +25,7 @@ module Dictum
 
       private
 
+      # Different event types and their corresponding matching method.
       def methods
         {
           NilClass   => ->(_event) { true },

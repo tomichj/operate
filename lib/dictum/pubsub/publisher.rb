@@ -2,9 +2,13 @@ require 'active_support/notifications'
 
 module Dictum
   module Pubsub
+
+    #
+    # A Command uses Publisher to register event handlers and broadcast to them.
+    #
     module Publisher
 
-      # subscribe a block
+      # Subscribe a block
       #
       # @example
       #   my_publisher.on(:order_created) { |args| ... }
@@ -17,7 +21,7 @@ module Dictum
         self
       end
 
-      # broadcasts an event
+      # Broadcasts an event
       #
       # @example
       #   def call
@@ -42,10 +46,6 @@ module Dictum
       def clean_event(event)
         event.to_s.gsub('-', '_')
       end
-
-      # def self.included(base)
-      #   base.extend(ClassMethods)
-      # end
     end
   end
 end

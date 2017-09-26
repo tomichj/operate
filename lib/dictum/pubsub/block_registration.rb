@@ -9,9 +9,7 @@ module Dictum
       end
 
       def broadcast(event, *args)
-        if should_broadcast?(event)
-          listener.call(*args)
-        end
+        listener.call(*args) if should_broadcast?(event)
       end
 
       private
