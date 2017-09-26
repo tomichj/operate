@@ -1,0 +1,67 @@
+require 'spec_helper'
+require 'dictum'
+
+module Dictum
+  describe Command do
+    describe '#call' do
+      it 'registers response with no constructor args' do
+        response = false
+        SimpleCommand.call do
+          on(:ok) { response = true }
+        end
+        expect(response).to be_truthy
+      end
+
+      it 'registers response using constructor args' do
+        arg = '1234'
+        response = nil
+        WithConstructorCommand.call(arg) do
+          on(:ok) { |msg| response = msg }
+        end
+        expect(response).to eq arg
+      end
+
+      it 'registers multiple handlers' do
+        response = nil
+        WithArgCommand.call do
+          on(:ok) { raise 'should not be called' }
+          on(:validation_failure) { |msg| response = msg }
+        end
+        expect(response).to eq WithArgCommand::MSG
+      end
+
+      it 'registers list of events' do
+        received = false
+        SimpleCommand.call do
+          on(:one, :two, :ok) { received = true }
+        end
+        expect(received).to be_truthy
+      end
+    end
+  end
+end
+
+class WithConstructorCommand # <include> Dictum::Command
+  include Dictum::Command
+  def initialize(arg)
+    @arg = arg
+  end
+  def call
+    broadcast(:ok, @arg)
+  end
+end
+
+class SimpleCommand # < Dictum::Command
+  include Dictum::Command
+  def call
+    broadcast(:ok)
+  end
+end
+
+class WithArgCommand # < Dictum::Command
+  include Dictum::Command
+  MSG = 'Oooh I failed'
+  def call
+    broadcast(:validation_failure, MSG)
+  end
+end

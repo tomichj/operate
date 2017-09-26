@@ -1,12 +1,10 @@
 module Dictum
   module Pubsub #:nodoc:
-
     # Describes allowed events
     #
     # Duck-types the argument to quack like array of strings
     # when responding to the {#include?} method call.
     class Events
-
       # Initialize with a list of events.
       #
       # @param [NilClass, String, Symbol, Array, Regexp] list
@@ -36,9 +34,7 @@ module Dictum
         }
       end
 
-      def list
-        @list
-      end
+      attr_reader :list
 
       def appropriate_method
         @appropriate_method ||= methods[recognized_type]
@@ -49,7 +45,7 @@ module Dictum
       end
 
       def type_not_recognized
-        fail(ArgumentError, "#{list.class} not supported for `on` argument")
+        raise(ArgumentError, "#{list.class} not supported for `on` argument")
       end
     end
   end

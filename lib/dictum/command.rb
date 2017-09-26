@@ -1,28 +1,32 @@
+require 'active_support/concern'
 require 'dictum/pubsub/publisher'
 require 'dictum/pubsub/events'
-require 'dictum/pubsub/block_registration'
+require 'dictum/pubsub/registration'
 
 module Dictum
 
   #
   # A command.
   #
-  class Command
+  module Command
     include Dictum::Pubsub::Publisher
+    extend ActiveSupport::Concern
 
-    def self.call(*args, &block)
-      command = new(*args)
-      command.evaluate(&block) if block_given?
-      command.call
+    module ClassMethods
+      def call(*args, &block)
+        command = new(*args)
+        command.evaluate(&block) if block_given?
+        command.call
+      end
+    end
+
+    def transaction(&block)
+      ActiveRecord::Base.transaction(&block) if block_given?
     end
 
     def evaluate(&block)
       @caller = eval('self', block.binding)
       instance_eval(&block)
-    end
-
-    def transaction(&block)
-      ActiveRecord::Base.transaction(&block) if block_given?
     end
 
     def method_missing(method_name, *args, &block)

@@ -1,5 +1,8 @@
 module Dictum
   module Pubsub
+    #
+    # Registers a listener for an event(s).
+    #
     class Registration
       attr_reader :on, :listener
 

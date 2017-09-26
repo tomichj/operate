@@ -1,2 +1,6 @@
 require 'dictum/version'
 require 'dictum/command'
+require 'dictum/pubsub/events'
+require 'dictum/pubsub/publisher'
+require 'dictum/pubsub/registration'
+require 'active_support/concern'
