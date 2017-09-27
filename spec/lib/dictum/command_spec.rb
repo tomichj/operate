@@ -41,16 +41,6 @@ module Operate
   end
 end
 
-# class TransactingCommand
-#   include Operate::Command
-#   def call
-#     transaction do
-#       raise ActiveRecord::Rollback
-#     end
-#     broadcast(:done)
-#   end
-# end
-
 class WithConstructorCommand
   include Operate::Command
   def initialize(arg)
