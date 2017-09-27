@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Justin Tomich']
   spec.email         = ['tomichj@gmail.com']
 
-  spec.summary       = 'An operation object.'
-  spec.description   = ''
+  spec.summary       = 'Create service objects with Operate.'
+  spec.description   = 'Create service objects with Operate.'
   spec.homepage      = 'https://github.com/tomichj/operate'
   spec.license       = 'MIT'
 
