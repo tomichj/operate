@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in dictum.gemspec
+# Specify your gem's dependencies in operate.gemspec
 gemspec

@@ -1,4 +1,4 @@
-module Dictum
+module Operate
 
   #
   # A command-pattern implementation for controller actions, etc.
@@ -8,7 +8,7 @@ module Dictum
   # `transaction` wraps ActiveRecord transactions.
   #
   module Command
-    include Dictum::Pubsub::Publisher
+    include Operate::Pubsub::Publisher
     extend ActiveSupport::Concern
 
     module ClassMethods

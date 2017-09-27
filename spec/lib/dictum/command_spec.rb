@@ -1,7 +1,7 @@
-require 'dictum'
+require 'operate'
 require 'spec_helper'
 
-module Dictum
+module Operate
   describe Command do
     describe '#call' do
       it 'registers response with no constructor args' do
@@ -42,7 +42,7 @@ module Dictum
 end
 
 # class TransactingCommand
-#   include Dictum::Command
+#   include Operate::Command
 #   def call
 #     transaction do
 #       raise ActiveRecord::Rollback
@@ -52,7 +52,7 @@ end
 # end
 
 class WithConstructorCommand
-  include Dictum::Command
+  include Operate::Command
   def initialize(arg)
     @arg = arg
   end
@@ -62,14 +62,14 @@ class WithConstructorCommand
 end
 
 class SimpleCommand
-  include Dictum::Command
+  include Operate::Command
   def call
     broadcast(:ok)
   end
 end
 
 class WithArgCommand
-  include Dictum::Command
+  include Operate::Command
   MSG = 'Oooh I failed'
   def call
     broadcast(:validation_failure, MSG)

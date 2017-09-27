@@ -1,4 +1,4 @@
-module Dictum
+module Operate
   module Pubsub
     #
     # Registers a listener for an event(s).
@@ -8,7 +8,7 @@ module Dictum
 
       def initialize(listener, options)
         @listener = listener
-        @on = Dictum::Pubsub::Events.new options[:on]
+        @on = Operate::Pubsub::Events.new options[:on]
       end
 
       def broadcast(event, *args)

@@ -1,6 +1,6 @@
 require 'active_support/notifications'
 
-module Dictum
+module Operate
   module Pubsub
 
     #
@@ -17,7 +17,7 @@ module Dictum
       def on(*events, &block)
         raise ArgumentError, 'must give at least one event' if events.empty?
         raise ArgumentError, 'must pass a block' unless block
-        registrations << Dictum::Pubsub::Registration.new(block, on: events)
+        registrations << Operate::Pubsub::Registration.new(block, on: events)
         self
       end
 

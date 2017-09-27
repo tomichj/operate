@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dictum/version'
+require 'operate/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'dictum'
-  spec.version       = Dictum::VERSION
+  spec.name          = 'operate'
+  spec.version       = Operate::VERSION
   spec.authors       = ['Justin Tomich']
   spec.email         = ['tomichj@gmail.com']
 
   spec.summary       = 'An operation object.'
   spec.description   = ''
-  spec.homepage      = 'https://github.com/tomichj/dictum'
+  spec.homepage      = 'https://github.com/tomichj/operate'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -19,8 +19,7 @@ Gem::Specification.new do |spec|
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
   else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
+    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -31,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'activesupport', '>= 4.2.0'
-  spec.add_dependency 'activemodel',   '>= 4.2.0'
   spec.add_dependency 'activerecord',  '>= 4.2.0'
 
   spec.add_development_dependency 'bundler', '~> 1.14'

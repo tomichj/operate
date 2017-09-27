@@ -1,4 +1,4 @@
-module Dictum
+module Operate
   module Pubsub #:nodoc:
     # Describes allowed events
     #

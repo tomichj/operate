@@ -1,7 +1,7 @@
 require "bundler/setup"
-# require "dictum"
+# require "operate"
 
-require File.expand_path("../../lib/dictum", __FILE__)
+require File.expand_path("../../lib/operate", __FILE__)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
