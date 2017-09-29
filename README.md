@@ -2,14 +2,20 @@
 
 Operate is a gem to help create [service objects].
 
-Use Operate to __remove all business logic from your controller and model__, subsuming it in an Operate-based 
-class that represents your processes. Examples might be: a user addition, a post addition, or adding  a comment.  
+Use Operate to __remove all business logic from your controller and model__, subsuming it in Operate-based 
+"service" object that represents your processes. Examples might be: a user addition, a post addition, 
+or adding a comment.  
 
 Service objects can out factor behavior that would bloat models or controllers, and is a useful step to patterns
 like Strategy and Command.
 
-Operate is in the very earliest stages of development. Additional features will be added. The core API 
-exposed via `Operate::Command` is solid and no changes are in the words.
+Service objects are not a new concept, and extracting controller bloat to service objects is a common 
+refactoring pattern. This [Arkency blog post] describes extracting service objects using SimpleDelegator, a
+useful pattern. Operate can assist you with process, further refining it: rather than raising exceptions in your
+service object, and rescuing exceptions in your controller, we broadcast and subscribe to events.
+
+Operate is in the very earliest stages of development. Additional features will be added. The current API 
+exposed via `Operate::Command`, however, is solid and no breaking changes there are anticipated.
 
 
 ## Dependencies
@@ -122,6 +128,7 @@ expected to adhere to the [Contributor Covenant](http://contributor-covenant.org
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 [service objects]: https://gist.github.com/blaix/5764401
+[arkency blog post]: http://blog.arkency.com/2015/05/extract-a-service-object-using-simpledelegator/
 [Reform]: http://trailblazer.to/gems/reform/index.html
 [rectify]: https://github.com/andypike/rectify
 [wisper]: https://github.com/krisleech/wisper
