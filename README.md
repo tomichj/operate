@@ -2,7 +2,7 @@
 
 Operate is a gem to help create [service objects].
 
-Use Operate to __remove all business logic from your controller and model__, subsuming it in Operate-based 
+Use Operate to __remove business logic from your controller and model__, subsuming it in Operate-based 
 "service" object that represents your processes. Examples might be: a user addition, a post addition, 
 or adding a comment.  
 
