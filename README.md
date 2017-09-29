@@ -50,10 +50,10 @@ Just `include Operate::Command` in your class. Operate's api provides:
 
 Methods used in your service class:
 * `self#call(*args, &block)` will initialize your service class with *args and invoke #call
-* `#broadcast(:event, *args)` that will broadcast an event to a subscriber
-* `#transaction(&block)` that wraps a block inside a transaction
+* `#broadcast(:event, *args)` will broadcast an event to a subscriber (see `on` below)
+* `#transaction(&block)` wraps a block with an ActiveRecord::Base.transaction
 
-Methods used by clients of your service class:
+Methods used by clients (normally a controller) of your service class:
 * `#on(*events, &block)` that subscribe to an event or events, and provide a block to handle that event
 
 
