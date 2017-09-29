@@ -60,6 +60,7 @@ Methods used by clients of your service class:
 An example service:
 
 ```ruby
+# put in app/services, app/commands, or something like that
 class UserAddition
   include Operate::Command
   
@@ -69,7 +70,7 @@ class UserAddition
   end
   
   def call
-    return broadcast(:invalid) unless @form.validate(@params)
+    return broadcast(:invalid) unless @form.validate(@params[:user])
     
     transaction do
       create_user
@@ -108,6 +109,8 @@ class UserController < ApplicationController
 end
 ```
 
+Note: this example does not use [Strong Parameters] as [Reform] provides an explicit form property layout.
+
 
 ## Credit
 
@@ -130,5 +133,6 @@ The gem is available as open source under the terms of the [MIT License](http://
 [service objects]: https://gist.github.com/blaix/5764401
 [arkency blog post]: http://blog.arkency.com/2015/05/extract-a-service-object-using-simpledelegator/
 [Reform]: http://trailblazer.to/gems/reform/index.html
+[String Parameters]: https://github.com/rails/strong_parameters
 [rectify]: https://github.com/andypike/rectify
 [wisper]: https://github.com/krisleech/wisper
