@@ -11,6 +11,8 @@ module Operate
     include Operate::Pubsub::Publisher
     extend ActiveSupport::Concern
 
+    class Error < StandardError; end
+
     module ClassMethods
 
       #
@@ -24,7 +26,13 @@ module Operate
     end
 
     def transaction(&block)
-      ActiveRecord::Base.transaction(&block) if block_given?
+      return unless block_given?
+
+      if defined?(ActiveRecord)
+        ::ActiveRecord::Base.transaction(&block)
+      else
+        raise Error, "Transactions are supported only with ActiveRecord"
+      end
     end
 
     def evaluate(&block)
