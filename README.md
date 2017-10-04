@@ -20,9 +20,9 @@ exposed via `Operate::Command`, however, is solid and no breaking changes there 
 
 ## Dependencies
 
-Operate requires:
-* `ActiveRecord` 4.2 or greater
-* `ActiveSupport` 4.2 or greater
+Operate requires only `ActiveSupport` 4.2 or greater.
+
+Additionally, if ActiveRecord is available, transactions are supported. There is no explicit support for other ORMs.
 
 It's not required, but a form object library like [Reform] is recommended. Reform is used in the examples below.
 
@@ -51,7 +51,7 @@ Just `include Operate::Command` in your class. Operate's api provides:
 Methods used in your service class:
 * `self#call(*args, &block)` will initialize your service class with *args and invoke #call
 * `#broadcast(:event, *args)` will broadcast an event to a subscriber (see `on` below)
-* `#transaction(&block)` wraps a block with an ActiveRecord::Base.transaction
+* `#transaction(&block)` wraps a block with an `ActiveRecord::Base.transaction` (only if ActiveRecord is available)
 
 Methods used by clients (normally a controller) of your service class:
 * `#on(*events, &block)` that subscribe to an event or events, and provide a block to handle that event
