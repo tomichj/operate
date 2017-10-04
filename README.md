@@ -2,6 +2,8 @@
 
 Operate is a gem to help create [service objects].
 
+[![Gem Version](https://badge.fury.io/rb/operate.svg)](https://badge.fury.io/rb/operate) ![Build status](https://travis-ci.org/tomichj/operate.svg?branch=master) ![Code Climate](https://codeclimate.com/github/tomichj/operate/badges/gpa.svg)
+
 Use Operate to __remove business logic from your controller and model__, subsuming it in Operate-based 
 "service" object that represents your processes. Examples might be: a user addition, a post addition, 
 or adding a comment.  
@@ -124,6 +126,13 @@ some philosophical differences in execution (rectify requires you extend their b
 Bug reports and pull requests are welcome on GitHub at https://github.com/tomichj/operate. 
 This project is intended to be a safe, welcoming space for collaboration, and contributors are 
 expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+
+## Contributors
+
+Many thanks to:
+
+* [k3rni](https://github.com/k3rni) made ActiveRecord dependency optional
 
 
 ## License
