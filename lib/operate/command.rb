@@ -9,15 +9,15 @@ module Operate
   #
   module Command
     include Operate::Pubsub::Publisher
-    extend ActiveSupport::Concern
 
     class Error < StandardError; end
 
-    module ClassMethods
+    def self.included(target)
+      target.extend ClassMethods
+    end
 
-      #
-      # Call will initialize the class with *args and invoke `call` with no parameters.
-      #
+    module ClassMethods
+      # Call will initialize the class with *args and invoke instance method `call` with no arguments
       def call(*args, &block)
         command = new(*args)
         command.evaluate(&block) if block_given?
@@ -31,7 +31,7 @@ module Operate
       if defined?(ActiveRecord)
         ::ActiveRecord::Base.transaction(&block)
       else
-        raise Error, "Transactions are supported only with ActiveRecord"
+        raise Error, 'Transactions are supported only with ActiveRecord'
       end
     end
 
