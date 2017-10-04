@@ -22,9 +22,7 @@ exposed via `Operate::Command`, however, is solid and no breaking changes there 
 
 ## Dependencies
 
-Operate requires only `ActiveSupport` 4.2 or greater.
-
-Additionally, if ActiveRecord is available, transactions are supported. There is no explicit support for other ORMs.
+If ActiveRecord is available, transactions are supported. There is no explicit support for other ORMs.
 
 It's not required, but a form object library like [Reform] is recommended. Reform is used in the examples below.
 
