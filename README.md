@@ -57,7 +57,7 @@ Methods used by clients (normally a controller) of your service class:
 * `#on(*events, &block)` that subscribe to an event or events, and provide a block to handle that event
 
 
-An example service:
+### A basic service
 
 ```ruby
 # put in app/services, app/commands, or something like that
@@ -112,11 +112,70 @@ end
 Note: this example does not use [Strong Parameters] as [Reform] provides an explicit form property layout.
 
 
+### Passing parameters
+
+You can pass parameters to the handling block by supplying the parameters as arguments to `broadcast`.
+
+```ruby
+# Your service
+class UserAddition
+  include Operate::Command
+  def call
+    # ...
+    broadcast(:ok, user)
+  end
+end
+
+
+# Your client (a controller):
+ def create
+  UserAddition.call(@form) do
+    on(:ok) {|user| logger.info "#{user.name} created" }
+  end
+end
+```
+
+
+## Testing
+
+A straight-forward way to test the events broadcast by an `Operate::Command` implementor:
+
+```ruby
+class UserAddition
+  include Operate::Command
+  # ...
+  def call
+    return broadcast(:invalid) if form.invalid?
+    # ...
+    broadcast(:ok) 
+  end
+end
+```
+
+```ruby
+describe UserAddition do
+  it 'broadcasts ok when creating user' do
+    is_ok = false
+    UserAddition.call(attributes_for(:new_user)) do
+      on(:ok) { is_ok = true }
+    end
+    expect(is_ok).to eq true
+  end
+  it 'broadcasts invalid when user validation fails' do
+    is_invalid = false
+    UserAddition.call(attributes_for(:invalid_user)) do
+      on(:invalid) { is_invalid = true }
+    end
+    expect(is_invalid).to eq true
+  end
+end
+```
+
 ## Credit
 
 The core of Operate is based on [rectify] and [wisper], and would not exist without these fine projects.
 Both rectify and wisper are excellent gems, they just provide more functionality than I require, and with
-some philosophical differences in execution (rectify requires you extend their base class, operate provides mixins).
+some philosophical differences in execution (rectify requires you to extend their base class, operate provides mixins).
 
 
 ## Contributing
