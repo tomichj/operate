@@ -8,7 +8,7 @@ Use Operate to __remove business logic from your controller and model__, subsumi
 "service" object that represents your processes. Examples might be: a user addition, a post addition, 
 or adding a comment.  
 
-Service objects can out factor behavior that would bloat models or controllers, and is a useful step to patterns
+Service objects can factor out behavior that would bloat models or controllers, and is a useful step to patterns
 like Strategy and Command.
 
 Service objects are not a new concept, and extracting controller bloat to service objects is a common 
