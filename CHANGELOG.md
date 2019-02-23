@@ -1,5 +1,9 @@
 # Operate Changelog
 
+## [0.2.0] - February 23, 2019
+
+- `expose` a value within a handler block to the caller
+
 
 ## [0.1.1] - October 27, 2017
 

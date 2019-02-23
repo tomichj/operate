@@ -55,6 +55,7 @@ Methods used in your service class:
 
 Methods used by clients (normally a controller) of your service class:
 * `#on(*events, &block)` that subscribe to an event or events, and provide a block to handle that event
+* `#expose(hash)` called within a block passed to `#on` will set the hash as instance variables on the caller (typically a controller)
 
 
 ### A basic service
@@ -128,13 +129,27 @@ end
 
 
 # Your client (a controller):
- def create
+def create
   UserAddition.call(@form) do
     on(:ok) {|user| logger.info "#{user.name} created" }
   end
 end
 ```
 
+### Exposing values
+
+You can expose a value from within a handler block to the calling controller. Pass the values to expose as a hash.
+
+```ruby
+def new
+  UserBuild.call(@form) do
+    on(:ok) do |user|
+	  expose(user: user)
+	  render :new  # new.html.erb can access @user
+	end
+  end
+end
+```
 
 ## Testing
 
@@ -175,7 +190,7 @@ end
 
 The core of Operate is based on [rectify] and [wisper], and would not exist without these fine projects.
 Both rectify and wisper are excellent gems, they just provide more functionality than I require, and with
-some philosophical differences in execution (rectify requires you to extend their base class, operate provides mixins).
+some philosophical differences in execution (rectify requires you to extend their base class, while operate provides mixins).
 
 
 ## Contributing
