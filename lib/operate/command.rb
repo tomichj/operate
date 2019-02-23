@@ -6,6 +6,7 @@ module Operate
   # `register` handlers with on().
   # `broadcast` results with broadcast().
   # `transaction` wraps ActiveRecord transactions.
+  # `expose` to set a value from the handler block to the caller
   #
   module Command
     include Operate::Pubsub::Publisher
@@ -17,12 +18,19 @@ module Operate
     end
 
     module ClassMethods
+      attr_reader :command_presenter
+      
       # Call will initialize the class with *args and invoke instance method `call` with no arguments
       def call(*args, &block)
         command = new(*args)
         command.evaluate(&block) if block_given?
         command.call
       end
+      
+      # def presenter presenter
+      #   @command_presenter = presenter
+      #   self
+      # end
     end
 
     def transaction(&block)
@@ -50,6 +58,24 @@ module Operate
 
     def respond_to_missing?(method_name, include_private = false)
       @caller.respond_to?(method_name, include_private)
+    end
+    
+    #
+    # Expose a value within a handler block to the caller.
+    # Sets attribute directly if available, or as an instance variable.
+    #
+    # RegisterAccount.call(@form) do
+    #   on(:ok) { |user| expose(:user => user) }
+    # end
+    #
+    def expose(presentation_data)
+      presentation_data.each do |attribute, value|
+        if @caller.respond_to?("#{attribute}=")
+          @caller.public_send("#{attribute}=", value)
+        else
+          @caller.instance_variable_set("@#{attribute}", value)
+        end
+      end
     end
   end
 end

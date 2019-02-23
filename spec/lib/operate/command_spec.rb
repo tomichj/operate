@@ -38,6 +38,26 @@ module Operate
         expect(received).to be_truthy
       end
     end
+    
+    describe '#expose' do
+      context 'from caller without the attribute' do
+        it 'sets the instance variable on the caller' do
+          WithConstructorCommand.call('1234') do
+            on(:ok) { |msg| expose(test_var: msg) }
+          end
+          expect(@test_var).to be_present
+        end
+      end
+      context 'from controller with the attribute' do
+        it 'sets the attribute on the caller' do
+          @new_test_var = 'fail'
+          WithConstructorCommand.call('1234') do
+            on(:ok) { |msg| expose(new_test_var: msg) }
+          end
+          expect(@new_test_var).to eq '1234'
+        end
+      end
+    end
   end
 end
 
