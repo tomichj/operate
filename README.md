@@ -46,33 +46,40 @@ Or install it yourself as:
 
 ## Usage
 
-Just `include Operate::Command` in your class. Operate's api provides:
+### API
+
+Operate's `Operate::Command` api provides:
 
 Methods used in your service class:
-* `self#call(*args, &block)` will initialize your service class with *args and invoke #call
+* `#call` - perform your business logic
 * `#broadcast(:event, *args)` will broadcast an event to a subscriber (see `on` below)
 * `#transaction(&block)` wraps a block with an `ActiveRecord::Base.transaction` (only if ActiveRecord is available)
 
 Methods used by clients (normally a controller) of your service class:
+* `self#call(*args, &block)` will initialize your class with *args and then invoke #call
 * `#on(*events, &block)` that subscribe to an event or events, and provide a block to handle that event
 * `#expose(hash)` called within a block passed to `#on` will set the hash as instance variables on the caller (typically a controller)
 
+### A service example
 
-### A basic service
+To build a basic operation:
+
+- Add `include Operate::Command` to your command class
+- Accept and assign whatever arguments are required in the `initialize` method
+- Make the `call` method execute your operation
+- `broadcast(:some_event, *results)` (results optional) to return the result of your operation
 
 ```ruby
 # put in app/services, app/commands, or something like that
 class UserAddition
   include Operate::Command
   
-  def initialize(form, params)
+  def initialize(form)
     @form = form
-    @params = params
   end
   
   def call
-    return broadcast(:invalid) unless @form.validate(@params[:user])
-    
+    return broadcast(:invalid, @form) unless @form.valid?    
     transaction do
       create_user
       audit_trail
@@ -104,14 +111,16 @@ class UserController < ApplicationController
     @form = UserForm.new(params) # a simple Reform form object
     UserAddition.call(@form) do
       on(:ok)      { redirect_to dashboard_path }
-      on(:invalid) { render :new }
+      on(:invalid) do |form|
+		  expose(form: form)
+		  render :new
+	  end
     end
   end
 end
 ```
 
 Note: this example does not use [Strong Parameters] as [Reform] provides an explicit form property layout.
-
 
 ### Passing parameters
 
