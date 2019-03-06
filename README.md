@@ -19,6 +19,7 @@ service object, and rescuing exceptions in your controller, we broadcast and sub
 Operate is in the very earliest stages of development. Additional features will be added. The current API 
 exposed via `Operate::Command`, however, is solid and no breaking changes there are anticipated.
 
+You can read a little more about Operate in this [short blog post](https://tomich.org/blog/2019/02/27/operate-intro.html).
 
 ## Dependencies
 
